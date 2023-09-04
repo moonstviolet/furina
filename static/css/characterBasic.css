@@ -1,0 +1,166 @@
+/*
+ * element
+ */
+.elem_anemo .talent-icon {
+    background-image: url(/static/resources/bg/talent-anemo.png);
+}
+
+.elem_anemo .container {
+    background-image: url(/static/resources/bg/bg-anemo.jpg);
+}
+
+.elem_cryo .talent-icon {
+    background-image: url(/static/resources/bg/talent-cryo.png);
+}
+
+.elem_cryo .container {
+    background-image: url(/static/resources/bg/bg-cryo.jpg);
+}
+
+.elem_electro .talent-icon {
+    background-image: url(/static/resources/bg/talent-electro.png);
+}
+
+.elem_electro .container {
+    background-image: url(/static/resources/bg/bg-electro.jpg);
+}
+
+.elem_dendro .talent-icon {
+    background-image: url(/static/resources/bg/talent-dendro.png);
+}
+
+.elem_dendro .container {
+    background-image: url(/static/resources/bg/bg-dendro.jpg);
+}
+
+.elem_geo .talent-icon {
+    background-image: url(/static/resources/bg/talent-geo.png);
+}
+
+.elem_geo .container {
+    background-image: url(/static/resources/bg/bg-geo.jpg);
+}
+
+.elem_hydro .talent-icon {
+    background-image: url(/static/resources/bg/talent-hydro.png);
+}
+
+.elem_hydro .container {
+    background-image: url(/static/resources/bg/bg-hydro.jpg);
+}
+
+.elem_pyro .talent-icon {
+    background-image: url(/static/resources/bg/talent-pyro.png);
+}
+
+.elem_pyro .container {
+    background-image: url(/static/resources/bg/bg-pyro.jpg);
+}
+
+.elem-hydro .talent-icon {
+    background-image: url(/static/resources/bg/talent-hydro.png);
+}
+
+.elem-hydro .elem-bg,
+.hydro-bg {
+    background-image: url(/static/resources/bg/bg-hydro.jpg);
+}
+
+.elem-anemo .talent-icon {
+    background-image: url(/static/resources/bg/talent-anemo.png);
+}
+
+.elem-anemo .elem-bg,
+.anemo-bg {
+    background-image: url(/static/resources/bg/bg-anemo.jpg);
+}
+
+.elem-cryo .talent-icon {
+    background-image: url(/static/resources/bg/talent-cryo.png);
+}
+
+.elem-cryo .elem-bg,
+.cryo-bg {
+    background-image: url(/static/resources/bg/bg-cryo.jpg);
+}
+
+.elem-electro .talent-icon {
+    background-image: url(/static/resources/bg/talent-electro.png);
+}
+
+.elem-electro .elem-bg,
+.electro-bg {
+    background-image: url(/static/resources/bg/bg-electro.jpg);
+}
+
+.elem-geo .talent-icon {
+    background-image: url(/static/resources/bg/talent-geo.png);
+}
+
+.elem-geo .elem-bg,
+.geo-bg {
+    background-image: url(/static/resources/bg/bg-geo.jpg);
+}
+
+.elem-pyro .talent-icon {
+    background-image: url(/static/resources/bg/talent-pyro.png);
+}
+
+.elem-pyro .elem-bg,
+.pyro-bg {
+    background-image: url(/static/resources/bg/bg-pyro.jpg);
+}
+
+.elem-dendro .talent-icon {
+    background-image: url(/static/resources/bg/talent-dendro.png);
+}
+
+.elem-dendro .elem-bg,
+.dendro-bg {
+    background-image: url(/static/resources/bg/bg-dendro.jpg);
+}
+
+/*
+ * constellation
+ */
+.cons {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 5px;
+    border-radius: 4px;
+}
+
+.cons-0 {
+    background: #666;
+    color: #fff;
+}
+
+.cons-1 {
+    background: #5cbac2;
+    color: #fff;
+}
+
+.cons-2 {
+    background: #339d61;
+    color: #fff;
+}
+
+.cons-3 {
+    background: #3e95b9;
+    color: #fff;
+}
+
+.cons-4 {
+    background: #3955b7;
+    color: #fff;
+}
+
+.cons-5 {
+    background: #531ba9cf;
+    color: #fff;
+}
+
+.cons-6 {
+    background: #ff5722;
+    color: #fff;
+}

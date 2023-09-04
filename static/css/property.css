@@ -1,0 +1,131 @@
+.char-prop {
+    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.char-prop li {
+    width: 300px;
+    font-size: 17px;
+    list-style: none;
+    height: 32px;
+    line-height: 32px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    display: flex;
+    padding-left: 3px;
+}
+
+.char-prop li:nth-child(even) {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.char-prop li:nth-child(odd) {
+    background: rgba(50, 50, 50, 0.4);
+}
+
+.char-prop li .weight {
+    width: 36px;
+}
+
+.char-prop li .weight span {
+    display: block;
+    width: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin: 7px auto 0;
+}
+
+.char-prop li .weight span.gold {
+    color: #ffe699;
+}
+
+.char-prop li .icon {
+    width: 26px;
+    padding: 2px 5px;
+}
+
+.char-prop li .icon i {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    background-image: url(/static/resources/icons/icon.png);
+    background-size: auto 16px;
+}
+
+.char-prop li .title {
+    width: 75px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.8), 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.char-prop li .value {
+    width: 100px;
+    text-align: right;
+    font-weight: normal;
+    padding-right: 10px;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.8), 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.char-prop li .value2 {
+    font-weight: normal;
+    width: 70px;
+    text-align: right;
+    font-size: 12px;
+    padding: 4px 10px 0 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.char-prop li .value2 span {
+    display: block;
+    height: 13px;
+    line-height: 13px;
+    transform-origin: right center;
+}
+
+.char-prop li .value2 .base {
+    color: #eee;
+}
+
+.char-prop li .value2 .plus {
+    color: #90e800;
+}
+
+.i-Hp {
+    background-position: -16px 0;
+}
+
+.i-Atk {
+    background-position: -32px 0;
+}
+
+.i-Def {
+    background-position: -48px 0;
+}
+
+.i-Mastery {
+    background-position: -64px 0;
+}
+
+.i-CritRate {
+    background-position: -80px 0;
+}
+
+.i-CritDmg {
+    background-position: -96px 0;
+}
+
+.i-Recharge {
+    background-position: -112px 0;
+}
+
+.i-DmgBonus {
+    background-position: -128px 0;
+}
+
+.i-Healing {
+    background-position: -144px 0;
+}

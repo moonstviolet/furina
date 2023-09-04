@@ -1,0 +1,30 @@
+{{define "artifactItem"}}
+<div class="item arti">
+    <div class="arti-icon">
+        <div class="img"
+             style="background-image:url(/static/resources/artifact/imgs/{{.Set}}/{{.Type}}.webp)"></div>
+        <span>+{{.Level}}</span>
+    </div>
+    <div class="head">
+        <strong>{{.Name}}</strong>
+        <span class="mark mark-{{.Rating}}"><span>{{.Score}}分</span> - {{.Rating}}</span>
+    </div>
+    <ul class="detail attr">
+        <li class="arti-main">
+            <span class="title">{{.MainProp.Desc}}</span>
+            <span class="val">+{{.MainProp.Value}}</span>
+        </li>
+        {{range .AppendPropList}}
+        <li class='{{if ge .Weight 80}} {{"great"}} {{else if .Weight}} {{"useful"}} {{else}} {{"nouse"}} {{end}}'>
+                            <span class="title">{{.Desc}}
+                                <i class="eff">{{.Number}}</i>
+                                {{if .Count}}
+                                    <i class="up-num up-{{.Count}}"></i>
+                                {{end}}
+                            </span>
+            <span class="val">+{{.Value}}</span>
+        </li>
+        {{end}}
+    </ul>
+</div>
+{{end}}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="preload" href="/static/resources/font/HYWH-65W.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/NZBZ.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/tttgbnumber.woff" as="font" type="font/woff">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/characterBasic.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/character.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/property.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/artifact.css"/>
+    <title>圣遗物</title>
+</head>
+<body>
+<div class="artis">
+    <div class="item arti">
+        <form method="post" action="/artifact">
+            <div class="head">
+                <strong>
+                    <label>
+                        <select name="type">
+                            <option value="1">生之花</option>
+                            <option value="2">死之羽</option>
+                            <option value="3">时之沙</option>
+                            <option value="4">空之杯</option>
+                            <option value="5">理之冠</option>
+                        </select>
+                    </label>
+                </strong>
+            </div>
+            <ul class="detail attr">
+                <li class="arti-main">
+                    <label>
+                    <span class="title">
+                        <select name="property1">
+                            <option value="Hp" selected>小生命</option>
+                        </select>
+                    </span>
+                        <span class="val">
+                        <input name="value1" type="number">
+                    </span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                    <span class="title">
+                        <select name="property2">
+                            <option value="Hp" selected>小生命</option>
+                        </select>
+                    </span>
+                        <span class="val">
+                            <input type="number">
+                    </span>
+                    </label>
+                </li>
+            </ul>
+            <div class="head">
+                <button type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

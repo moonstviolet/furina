@@ -1,0 +1,6 @@
+.idea/
+local/
+config/*.yaml
+storage/user.json
+*.exe
+*.js

@@ -1,0 +1,449 @@
+.font-YS {
+    font-family: Number, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+}
+
+.font-NZBZ {
+    font-family: Number, "印品南征北战NZBZ体", NZBZ, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+}
+
+body {
+    width: 600px;
+}
+
+.container {
+    width: 600px;
+    padding: 0;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.basic {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.basic:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 8px;
+    top: 115px;
+    bottom: 0;
+    right: 8px;
+    box-shadow: 0 0 2px 0 #fff;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.main-pic {
+    width: 1400px;
+    height: 500px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: -545px;
+    position: relative;
+    z-index: 2;
+}
+
+.detail {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #fff;
+    z-index: 3;
+}
+
+.char-name {
+    font-size: 50px;
+    font-family: Number, "印品南征北战NZBZ体", NZBZ, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+    text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: right;
+}
+
+.char-lv {
+    margin-bottom: 20px;
+    text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: right;
+}
+
+.char-lv .cons {
+    margin-left: 5px;
+    vertical-align: bottom;
+}
+
+.detail.attr li:nth-child(even) {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.detail.attr li:nth-child(odd) {
+    background: rgba(50, 50, 50, 0.4);
+}
+
+.detail.attr li strong {
+    display: inline-block;
+    position: absolute;
+    right: 85px;
+    text-align: right;
+    font-weight: normal;
+}
+
+.detail.attr li span {
+    position: absolute;
+    right: 0;
+    text-align: left;
+    width: 75px;
+    display: inline-block;
+    color: #90e800;
+    font-size: 15px;
+}
+
+.talent-icon {
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    display: table;
+    border-radius: 50%;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 90;
+}
+
+.talent-icon img,
+.talent-icon .talent-icon-img {
+    width: 46%;
+    height: 46%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -22% 0 0 -23%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.talent-icon span {
+    background: #fff;
+    width: 34px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 17px;
+    text-align: center;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    margin-left: -15px;
+    color: #000;
+    box-shadow: 0 0 5px 0 #000;
+}
+
+.talent-icon.talent-plus span {
+    background: #2e353e;
+    color: #ffdfa0;
+    font-weight: bold;
+    box-shadow: 0 0 1px 0 #d3bc8e, 1px 1px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.talent-icon.talent-crown:after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 28px;
+    background: url(/static/resources/icons/crown.png) no-repeat;
+    background-size: contain;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    margin-left: -14px;
+}
+
+.char-talents {
+    display: flex;
+    width: 300px;
+    margin: 0 0 10px 0;
+}
+
+.char-cons {
+    display: flex;
+    width: 250px;
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+}
+
+.char-cons .talent-item,
+.char-talents .talent-item {
+    flex: 1;
+}
+
+.char-cons .talent-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 -5px;
+}
+
+.char-cons .talent-icon.off {
+    filter: grayscale(100%);
+    opacity: 0.4;
+}
+
+.data-info {
+    position: absolute;
+    bottom: -10px;
+    right: 15px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: right;
+    text-shadow: 1px 1px 1px #000;
+    z-index: 2;
+    line-height: 20px;
+    padding-right: 5px;
+}
+
+.data-info .time {
+    margin-left: 5px;
+}
+
+/***  dmg ***/
+.cont {
+    border-radius: 10px;
+    background: url(/static/resources/cont/card-bg.png) top left repeat-x;
+    background-size: auto 100%;
+    margin: 5px 15px 5px 10px;
+    position: relative;
+    box-shadow: 0 0 1px 0 #ccc, 2px 2px 4px 0 rgba(50, 50, 50, 0.8);
+    overflow: hidden;
+    color: #fff;
+    font-size: 16px;
+}
+
+.dmg-cont {
+    display: table;
+    width: calc(100% - 25px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dmg-mode .dmg-list .cont-footer {
+    display: none;
+}
+
+.cont-title {
+    background: rgba(0, 0, 0, 0.4);
+    color: #d3bc8e;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+.cont-title span {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+.cont-footer {
+    padding: 10px 15px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    font-weight: normal;
+}
+
+.cont-table {
+    display: table;
+    width: 100%;
+}
+
+.dmg-cont .tr {
+    display: table-row;
+}
+
+.dmg-cont .tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.dmg-cont .tr:nth-child(odd) {
+    background: rgba(50, 50, 50, 0.4);
+}
+
+.dmg-cont .tr > div {
+    display: table-cell;
+    box-shadow: 0 0 1px 0 #fff;
+}
+
+.dmg-cont .tr > div.value-full {
+    display: table;
+    width: 200%;
+}
+
+.dmg-cont .tr > div.value-none {
+    box-shadow: none;
+}
+
+.dmg-cont .thead {
+    text-align: center;
+}
+
+.dmg-cont .thead > div {
+    color: #d3bc8e;
+    background: rgba(0, 0, 0, 0.4);
+    line-height: 40px;
+    height: 40px;
+}
+
+.dmg-cont .title,
+.dmg-cont .th {
+    color: #d3bc8e;
+    padding-right: 15px;
+    text-align: right;
+    background: rgba(0, 0, 0, 0.4);
+    min-width: 100px;
+}
+
+.profile-mode .dmg-idx {
+    display: none !important;
+}
+
+.profile-mode .dmg-title {
+    width: 33.3333%;
+}
+
+.dmg-mode .dmg-idx,
+.weapon-mode .dmg-idx {
+    display: table-cell;
+    width: 5%;
+    min-width: initial;
+    padding-right: 0;
+    text-align: center;
+}
+
+.dmg-mode .dmg-title,
+.weapon-mode .dmg-title {
+    width: 31%;
+    min-width: initial;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 0;
+}
+
+.dmg .value {
+    text-align: center;
+    color: #fff;
+    display: block;
+    height: 40px;
+    font-size: 18px;
+    line-height: 40px;
+    width: 32%;
+}
+
+.dmg-notice {
+    font-size: 12px;
+    text-align: right;
+    color: #f5f5f5;
+    margin-right: 15px;
+}
+
+.dmg-msg {
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.dmg-msg .thead > div {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.dmg-msg .th {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.dmg-msg .tr .td {
+    padding: 8px 10px;
+}
+
+.dmg-msg .info {
+    font-size: 12px;
+    text-align: left;
+    padding-left: 10px;
+    font-weight: normal;
+}
+
+.dmg-calc .thead > div {
+    line-height: initial;
+}
+
+.dmg-calc .cont-table div {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dmg-calc .title {
+    text-align: center;
+    padding-right: 0;
+    min-width: 70px;
+}
+
+.dmg-calc .td {
+    padding: 5px 0;
+}
+
+.dmg-calc strong {
+    font-weight: normal;
+    display: block;
+}
+
+.dmg-calc span {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.dmg-calc .na,
+.dmg-calc .eq {
+    background: rgba(50, 50, 50, 0.5);
+}
+
+.dmg-calc .na {
+    color: #888;
+}
+
+.dmg-calc .lt {
+    background: rgba(23, 112, 41, 0.5);
+}
+
+.dmg-calc .gt {
+    background: rgba(112, 23, 23, 0.5);
+}
+
+.dmg-desc {
+    color: #aaa;
+}
+
+.dmg-desc ul {
+    padding-left: 10px;
+}
+
+.dmg-desc ul li {
+    color: #aaa;
+}
+
+.dmg-desc strong {
+    color: #d3bc8e;
+    display: inline;
+    padding: 0 3px;
+    font-weight: normal;
+}
+
+.arti-stat span {
+    font-size: 13px;
+    line-height: 20px;
+    color: #bbb;
+}
+
+.copyright.ad {
+    font-size: 12px;
+}
