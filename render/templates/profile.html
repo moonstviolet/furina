@@ -35,6 +35,15 @@
                 </div>
                 <span class="name">更新面板</span>
             </div>
+            <div class="char-item">
+                <div class="item-icon char-icon star1">
+                    <a style="text-decoration: none" href="/logout">
+                    <span class="img"
+                          style="background-image:url(/static/resources/cont/logo.png)"></span>
+                    </a>
+                </div>
+                <span class="name">切换账号</span>
+            </div>
             {{range .CharacterList}}
             <div class='char-item {{if .UpdatedRecently}}{{"new-char"}}{{end}}'>
                 <div class="item-icon char-icon star{{.Quality}}">

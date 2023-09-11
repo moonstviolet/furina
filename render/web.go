@@ -2,27 +2,47 @@ package render
 
 import (
 	"fmt"
-	"furina/config"
-	"furina/data"
-	"furina/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
 	"strconv"
+
+	"furina/config"
+	"furina/data"
+	"furina/logger"
 )
 
 func Routes(r *gin.Engine) {
 	r.LoadHTMLGlob(filepath.Join(config.GetBaseDir(), "render", "templates", "*"))
 	r.GET("/", index)
+	r.POST("/login", login)
+	r.GET("/logout", logout)
 	r.GET("/user/:uid/profile", userProfile)
 	r.POST("/user/:uid/update", userUpdate)
 	r.GET("/user/:uid/character/:cid", characterDetail)
-	r.GET("/artifact", artifact)
-	r.POST("/artifact", artifact)
 }
 
 func index(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "index.html", data.UserList)
+	uid, err := ctx.Cookie("uid")
+	if err != nil || uid == "" {
+		ctx.HTML(http.StatusOK, "index.html", nil)
+		return
+	}
+	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
+}
+
+func login(ctx *gin.Context) {
+	uid := ctx.Request.FormValue("uid")
+	if uid == "" {
+		ctx.Redirect(http.StatusFound, "/")
+	}
+	ctx.SetCookie("uid", uid, 0, "", "", false, true)
+	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
+}
+
+func logout(ctx *gin.Context) {
+	ctx.SetCookie("uid", "", -1, "", "", false, true)
+	ctx.Redirect(http.StatusFound, "/")
 }
 
 func userProfile(ctx *gin.Context) {

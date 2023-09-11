@@ -1,11 +1,8 @@
 package data
 
 import (
-	"errors"
 	"fmt"
 	"furina/logger"
-	"log"
-	"os"
 	"sync"
 	"time"
 )
@@ -34,7 +31,6 @@ type User struct {
 }
 
 var (
-	UserList      []string
 	UserCache     = map[string]User{} // 缓存
 	UserCacheLock = sync.RWMutex{}
 )
@@ -139,18 +135,5 @@ func putUser(user User) {
 	err := getDB().Put(TableNameUser, user.Uid, user)
 	if err != nil {
 		logger.Error("put user", "error", err)
-	}
-}
-
-func init() {
-	// 用户信息
-	err := readDataFromFile(getUserListFile(), &UserList)
-	if errors.Is(err, os.ErrNotExist) {
-		_, err = os.Create(getUserListFile())
-		if err != nil {
-			log.Fatalln(err)
-		}
-	} else if err != nil {
-		log.Fatalln(err)
 	}
 }
