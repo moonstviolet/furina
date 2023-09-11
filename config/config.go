@@ -1,30 +1,31 @@
 package config
 
 import (
-	"github.com/spf13/viper"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
+	BaseDir  string
 	Server   ServerConfig
 	Database DatabaseConfig
 	Version  VersionConfig
 }
 
 type ServerConfig struct {
-	BaseDir         string
-	RunMode         string
-	LocalStorageDir string
-	HttpPort        string
+	RunMode  string
+	HttpPort string
 }
 
 type DatabaseConfig struct {
-	Username string
-	Password string
-	Host     string
-	DBName   string
+	LocalStorageDir string
+	Username        string
+	Password        string
+	Addr            string
+	DBName          string
 }
 
 type VersionConfig struct {
@@ -34,14 +35,14 @@ type VersionConfig struct {
 }
 
 var (
-	gConfig = Config{}
+	gConfig Config
 )
 
-func Load() {
+func init() {
 	if dir, err := os.Getwd(); err != nil {
 		log.Fatalln(err)
 	} else {
-		gConfig.Server.BaseDir = dir
+		gConfig.BaseDir = dir
 	}
 	vp := viper.New()
 	vp.AddConfigPath("config/")
@@ -53,8 +54,8 @@ func Load() {
 	if err := vp.UnmarshalKey("Server", &gConfig.Server); err != nil {
 		log.Fatalln(err)
 	}
-	if gConfig.Server.LocalStorageDir == "" {
-		gConfig.Server.LocalStorageDir = filepath.Join(gConfig.Server.BaseDir, "local")
+	if gConfig.Database.LocalStorageDir == "" {
+		gConfig.Database.LocalStorageDir = filepath.Join(gConfig.BaseDir, "local")
 	}
 	if err := vp.UnmarshalKey("Database", &gConfig.Database); err != nil {
 		log.Fatalln(err)
@@ -71,9 +72,9 @@ func GetConfig() Config {
 }
 
 func GetBaseDir() string {
-	return gConfig.Server.BaseDir
+	return gConfig.BaseDir
 }
 
 func GetLocalStorageDir() string {
-	return gConfig.Server.LocalStorageDir
+	return gConfig.Database.LocalStorageDir
 }

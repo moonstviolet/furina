@@ -24,12 +24,12 @@ type CharacterInfo struct {
 }
 
 type User struct {
-	Uid           string
+	Uid           string `bson:"_id"`
 	UpdateAt      time.Time
-	UpdateMsg     string `json:"-"`
+	UpdateMsg     string `json:"-" bson:"-"`
 	TTL           int
 	Name          string
-	NewUpdate     bool `json:"-"`
+	NewUpdate     bool `json:"-" bson:"-"`
 	CharacterList []CharacterInfo
 }
 
@@ -44,7 +44,7 @@ func GetUser(uid string) (user User) {
 	if user.Uid != "" {
 		return
 	}
-	err := getDB().Get(uid, &user)
+	err := getDB().Get(TableNameUser, uid, &user)
 	if err != nil {
 		logger.Error("get user", "error", err)
 		return
@@ -136,7 +136,7 @@ func putUser(user User) {
 	UserCacheLock.Lock()
 	defer UserCacheLock.Unlock()
 	UserCache[user.Uid] = user
-	err := getDB().Put(user.Uid, user)
+	err := getDB().Put(TableNameUser, user.Uid, user)
 	if err != nil {
 		logger.Error("put user", "error", err)
 	}

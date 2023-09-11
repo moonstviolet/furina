@@ -40,10 +40,9 @@ type Weapon struct {
 }
 
 type Character struct {
-	Id       string    // "uid_cid"
-	Uid      string    // 游戏id
-	UpdateAt time.Time // 数据更新时间
-
+	Id             string              `bson:"_id"`
+	Uid            string              // 游戏id
+	UpdateAt       time.Time           // 数据更新时间
 	Cid            int                 // 角色id
 	Name           string              // 名称
 	Quality        int                 // 星级
@@ -72,7 +71,7 @@ func GetCharacter(uid string, cid int) (c Character) {
 	if ok {
 		return
 	}
-	err := getDB().Get(id, &c)
+	err := getDB().Get(TableNameCharacter, id, &c)
 	if err != nil {
 		logger.Error("get character", "error", err)
 	}
@@ -88,7 +87,7 @@ func putCharacter(c Character) {
 	CharacterCacheLock.Lock()
 	defer CharacterCacheLock.Unlock()
 	CharacterCache[c.Id] = c
-	err := getDB().Put(c.Id, c)
+	err := getDB().Put(TableNameCharacter, c.Id, c)
 	if err != nil {
 		logger.Error("put user", "error", err)
 	}

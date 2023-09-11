@@ -29,6 +29,9 @@ func userProfile(ctx *gin.Context) {
 	uid := ctx.Param("uid")
 	user := data.GetUser(uid)
 	if user.Uid == "" {
+		user = data.UpdateUser(uid)
+	}
+	if user.Uid == "" {
 		ctx.String(http.StatusOK, "错误的id")
 		return
 	}
@@ -55,7 +58,6 @@ func characterDetail(ctx *gin.Context) {
 
 type ArtifactCalReq struct {
 	Type int
-
 }
 
 func artifact(ctx *gin.Context) {

@@ -18,7 +18,6 @@ import (
 )
 
 func NewServer() *gin.Engine {
-	config.Load()
 	gin.SetMode(config.GetConfig().Server.RunMode)
 	r := gin.New()
 	r.Use(ginLogger(), ginRecovery())
