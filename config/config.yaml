@@ -1,0 +1,9 @@
+Server:
+  RunMode: release
+  HttpPort: 80 # web端口
+Database:
+  LocalStorageDir: # 本地存储目录
+  Username:
+  Password:
+  Addr: 127.0.0.1:27017 # mongo
+  DBName: furina

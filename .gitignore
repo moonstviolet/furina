@@ -1,5 +1,4 @@
 .idea/
 local/
-config/*.yaml
 *.exe
 *.js
