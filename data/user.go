@@ -32,6 +32,7 @@ type User struct {
 
 var (
 	UserCache     = map[string]User{} // 缓存
+	UserUpdateMsg = map[string]string{}
 	UserCacheLock = sync.RWMutex{}
 )
 
@@ -47,8 +48,6 @@ func GetUser(uid string) (user User) {
 	}
 	if user.Uid != "" {
 		setUserCache(user)
-	} else {
-		user = UpdateUser(uid)
 	}
 	return
 }
@@ -56,7 +55,7 @@ func GetUser(uid string) (user User) {
 func UpdateUser(uid string) (user User) {
 	user = getUserCache(uid)
 	if t := time.Now().Sub(user.UpdateAt).Seconds(); t < float64(user.TTL) {
-		user.UpdateMsg = fmt.Sprintf("更新失败, %.fs后才可再次更新数据", t)
+		user.UpdateMsg = fmt.Sprintf("更新失败, %.fs后才可再次更新数据", float64(user.TTL)-t)
 		setUserCache(user)
 		return
 	}
@@ -137,4 +136,16 @@ func putUser(user User) {
 	if err != nil {
 		logger.Error("put user", "error", err)
 	}
+}
+
+func CheckUidValid(uid string) bool {
+	if len(uid) != 9 {
+		return false
+	}
+	for _, v := range uid {
+		if v < '0' || v > '9' {
+			return false
+		}
+	}
+	return true
 }

@@ -36,6 +36,10 @@ func index(ctx *gin.Context) {
 
 func login(ctx *gin.Context) {
 	uid := ctx.Request.FormValue("uid")
+	if !data.CheckUidValid(uid) {
+		ctx.String(http.StatusBadRequest, "错误的id")
+		return
+	}
 	if uid == "" {
 		ctx.Redirect(http.StatusFound, "/")
 	}
@@ -50,6 +54,10 @@ func logout(ctx *gin.Context) {
 
 func userProfile(ctx *gin.Context) {
 	uid := ctx.Param("uid")
+	if !data.CheckUidValid(uid) {
+		ctx.String(http.StatusBadRequest, "错误的id")
+		return
+	}
 	user := data.GetUser(uid)
 	if user.Uid == "" {
 		user = data.UpdateUser(uid)
@@ -64,6 +72,10 @@ func userProfile(ctx *gin.Context) {
 
 func userUpdate(ctx *gin.Context) {
 	uid := ctx.Param("uid")
+	if !data.CheckUidValid(uid) {
+		ctx.String(http.StatusBadRequest, "错误的id")
+		return
+	}
 	data.UpdateUser(uid)
 	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
 }

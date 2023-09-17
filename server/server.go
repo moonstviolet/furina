@@ -31,7 +31,7 @@ func ginLogger() gin.HandlerFunc {
 		p := c.Request.URL.Path
 		start := time.Now()
 		c.Next()
-		cost := time.Since(start).Seconds()
+		cost := time.Since(start).String()
 		if !strings.HasPrefix(p, "/static") {
 			logger.Info(
 				"web",

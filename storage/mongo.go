@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -44,7 +45,9 @@ func (m *MongoDB) Start() error {
 }
 
 func (m *MongoDB) Write(table, id string, value any) error {
-	_, err := m.Db.Collection(table).InsertOne(context.Background(), value)
+	_, err := m.Db.Collection(table).ReplaceOne(
+		context.Background(), bson.M{"_id": id}, value, options.Replace().SetUpsert(true),
+	)
 	return err
 }
 
