@@ -2,13 +2,16 @@ package data
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 const (
 	EnkaUrlFormat = "https://enka.network/api/uid/%s"
+	UserAgent     = "furina"
 )
 
 const (
@@ -180,15 +183,43 @@ type Equip struct {
 
 func getEnkaData(uid string) (data *EnkaData, err error) {
 	url := fmt.Sprintf(EnkaUrlFormat, uid)
-	resp, err := http.Get(url)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return
 	}
+	req.Header.Set("User-Agent", UserAgent)
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return
+	}
+	switch resp.StatusCode {
+	case http.StatusOK:
+	case http.StatusBadRequest:
+		err = errors.New("Wrong UID format")
+	case 404:
+		err = errors.New("Player does not exist (MHY server said that)")
+	case 424:
+		err = errors.New("Game maintenance / everything is broken after the game update")
+	case 429:
+		err = errors.New("Rate-limited (either by my server or by MHY server)")
+	case 500:
+		err = errors.New("General server error")
+	case 503:
+		err = errors.New("I screwed up massively")
+	default:
+		err = errors.New(resp.Status)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return
+	}
+	defer resp.Body.Close()
 	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return
 	}
-	resp.Body.Close()
 	var res EnkaData
 	err = json.Unmarshal(bytes, &res)
 	return &res, err

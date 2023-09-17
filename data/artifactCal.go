@@ -60,7 +60,7 @@ func (c *Character) CalArtifactScore() {
 		StatNumber: map[string]float64{},
 	}
 	for idx := range c.ArtifactList {
-		c.ArtifactList[idx].calScore(c.PropertyWeight, c.PropertyMap)
+		c.ArtifactList[idx].CalScore(c.PropertyWeight, c.PropertyMap)
 		c.ArtifactStat.Score += c.ArtifactList[idx].Score
 		for k, v := range c.ArtifactList[idx].StatNumber {
 			c.ArtifactStat.StatNumber[k] += v
@@ -70,7 +70,7 @@ func (c *Character) CalArtifactScore() {
 	c.ArtifactStat.Rating = getArtifactRating(c.ArtifactStat.Score / 5)
 }
 
-func (a *Artifact) calScore(w MSI, p map[string]Property) {
+func (a *Artifact) CalScore(w MSI, p map[string]Property) {
 	a.Score = 0
 	a.StatNumber = map[string]float64{}
 	weight := MSI{}

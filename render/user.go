@@ -1,7 +1,6 @@
 package render
 
 import (
-	"fmt"
 	"furina/data"
 )
 
@@ -14,7 +13,6 @@ type UserProfileView struct {
 }
 
 func getUserProfileView(user data.User) UserProfileView {
-	fmt.Println(user)
 	return UserProfileView{
 		Uid:           user.Uid,
 		UpdateAt:      formatTime(user.UpdateAt),

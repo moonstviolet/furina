@@ -109,3 +109,113 @@ func getArtifactPropertyView(p data.Property) PropertyView {
 	}
 	return pv
 }
+
+type ArtifactTemplate struct {
+	Artifact     ArtifactView
+	PropertyList []PropertyView
+	Header       []struct {
+		Name string
+		Type int
+	}
+	MainProp        []PropertyView
+	AppendProp      []PropertyView
+	AppendPropCount []int
+}
+
+func getArtifactTemplate(artifact ArtifactView) ArtifactTemplate {
+	tpl := ArtifactTemplate{
+		Artifact: artifact,
+		PropertyList: []PropertyView{
+			{Key: data.PropKey_Hp},
+			{Key: data.PropKey_Atk},
+			{Key: data.PropKey_Def},
+			{Key: data.PropKey_Mastery},
+			{Key: data.PropKey_CritRate},
+			{Key: data.PropKey_CritDmg},
+			{Key: data.PropKey_Recharge},
+			{Key: data.PropKey_PhysicalDmgBonus},
+			{Key: data.PropKey_PyroDmgBonus},
+			{Key: data.PropKey_ElectroDmgBonus},
+			{Key: data.PropKey_HydroDmgBonus},
+			{Key: data.PropKey_DendroDmgBonus},
+			{Key: data.PropKey_AnemoDmgBonus},
+			{Key: data.PropKey_GeoDmgBonus},
+			{Key: data.PropKey_CryoDmgBonus},
+			{Key: data.PropKey_HealingBonus},
+		},
+		Header: []struct {
+			Name string
+			Type int
+		}{
+			{
+				Name: "生之花",
+				Type: data.ArtifactType_Flower,
+			},
+			{
+				Name: "死之羽",
+				Type: data.ArtifactType_Plume,
+			},
+			{
+				Name: "时之沙",
+				Type: data.ArtifactType_Sands,
+			}, {
+				Name: "空之杯",
+				Type: data.ArtifactType_Goblet,
+			},
+			{
+				Name: "理之冠",
+				Type: data.ArtifactType_Circlet,
+			},
+		},
+		MainProp: []PropertyView{
+			{Key: data.PropKey_Hp},
+			{Key: data.PropKey_HpPct},
+			{Key: data.PropKey_Atk},
+			{Key: data.PropKey_AtkPct},
+			{Key: data.PropKey_Def},
+			{Key: data.PropKey_DefPct},
+			{Key: data.PropKey_Mastery},
+			{Key: data.PropKey_CritRate},
+			{Key: data.PropKey_CritDmg},
+			{Key: data.PropKey_Recharge},
+			{Key: data.PropKey_PhysicalDmgBonus},
+			{Key: data.PropKey_PyroDmgBonus},
+			{Key: data.PropKey_ElectroDmgBonus},
+			{Key: data.PropKey_HydroDmgBonus},
+			{Key: data.PropKey_DendroDmgBonus},
+			{Key: data.PropKey_AnemoDmgBonus},
+			{Key: data.PropKey_GeoDmgBonus},
+			{Key: data.PropKey_CryoDmgBonus},
+			{Key: data.PropKey_HealingBonus},
+		},
+		AppendProp: []PropertyView{
+			{Key: data.PropKey_Hp},
+			{Key: data.PropKey_HpPct},
+			{Key: data.PropKey_Atk},
+			{Key: data.PropKey_AtkPct},
+			{Key: data.PropKey_Def},
+			{Key: data.PropKey_DefPct},
+			{Key: data.PropKey_Recharge},
+			{Key: data.PropKey_Mastery},
+			{Key: data.PropKey_CritRate},
+			{Key: data.PropKey_CritDmg},
+		},
+		AppendPropCount: []int{0, 1, 2, 3},
+	}
+	for i := range tpl.PropertyList {
+		switch tpl.PropertyList[i].Key {
+		case data.PropKey_Hp, data.PropKey_Atk, data.PropKey_Def:
+			tpl.PropertyList[i].Desc = PropertyViewDescMap[tpl.PropertyList[i].Key]
+		default:
+			tpl.PropertyList[i].Desc = ArtifactPropertyViewDescMap[tpl.PropertyList[i].Key]
+		}
+	}
+
+	for i := range tpl.MainProp {
+		tpl.MainProp[i].Desc = ArtifactPropertyViewDescMap[tpl.MainProp[i].Key]
+	}
+	for i := range tpl.AppendProp {
+		tpl.AppendProp[i].Desc = ArtifactPropertyViewDescMap[tpl.AppendProp[i].Key]
+	}
+	return tpl
+}

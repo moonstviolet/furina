@@ -1,6 +1,7 @@
 package render
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -20,6 +21,8 @@ func Routes(r *gin.Engine) {
 	r.GET("/user/:uid/profile", userProfile)
 	r.POST("/user/:uid/update", userUpdate)
 	r.GET("/user/:uid/character/:cid", characterDetail)
+	r.GET("/artifact", artifact)
+	r.POST("/artifact", artifact)
 }
 
 func index(ctx *gin.Context) {
@@ -76,14 +79,72 @@ func characterDetail(ctx *gin.Context) {
 	)
 }
 
-type ArtifactCalReq struct {
-	Type int
-}
-
 func artifact(ctx *gin.Context) {
 	if ctx.Request.Method == http.MethodGet {
-		ctx.HTML(http.StatusOK, "artifact.html", nil)
+		ctx.HTML(http.StatusOK, "artifact.html", getArtifactTemplate(ArtifactView{}))
 	} else if ctx.Request.Method == http.MethodPost {
-		fmt.Println(ctx.PostForm("type"))
+		var (
+			arti           data.Artifact
+			propertyWeight = map[string]int{}
+		)
+		err := func() error {
+			t, err := strconv.Atoi(ctx.PostForm("Type"))
+			if err != nil {
+				return err
+			}
+			if t < 1 || t > 5 {
+				return errors.New("错误的属性")
+			}
+			arti.Type = t
+			arti.Name = []string{"生之花", "死之羽", "时之沙", "空之杯", "理之冠"}[t-1]
+
+			arti.MainProp = data.Property{
+				Key: ctx.PostForm("MainPropKey"),
+			}
+			val, err := strconv.ParseFloat(ctx.PostForm("MainPropValue"), 64)
+			if err != nil {
+				return err
+			}
+			arti.MainProp.Value = val
+
+			keyList, valueList := ctx.PostFormArray("AppendPropKey"), ctx.PostFormArray("AppendPropValue")
+			if len(keyList) != len(valueList) || len(keyList) > 4 {
+				return errors.New("错误的属性")
+			}
+			for i := 0; i < len(keyList); i++ {
+				appendProp := data.Property{
+					Key: keyList[i],
+				}
+				val, err = strconv.ParseFloat(valueList[i], 64)
+				if err != nil {
+					return err
+				}
+				appendProp.Value = val
+				arti.AppendPropList = append(arti.AppendPropList, appendProp)
+			}
+
+			for k, v := range ctx.PostFormMap("PropertyWeight") {
+				if len(v) == 0 {
+					continue
+				}
+				weight, err := strconv.Atoi(v)
+				if err != nil {
+					return err
+				}
+				propertyWeight[k] = weight
+			}
+			return nil
+		}()
+		if err != nil {
+			logger.Error("圣遗物手动计算参数错误", "error", err)
+			ctx.String(http.StatusBadRequest, "错误的请求")
+			return
+		}
+		// todo 校验
+		arti.CalScore(propertyWeight, nil)
+		ctx.HTML(
+			http.StatusOK, "artifact.html",
+			getArtifactTemplate(getArtifactView(arti)),
+		)
 	}
 }

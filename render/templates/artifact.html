@@ -15,53 +15,86 @@
     <title>圣遗物</title>
 </head>
 <body>
-<div class="artis">
-    <div class="item arti">
-        <form method="post" action="/artifact">
-            <div class="head">
-                <strong>
+<div>
+    <form method="post" action="/artifact" target="_blank">
+        <div class="artis" style="display: inline-block; vertical-align: top; width: auto;">
+            <div class="item arti">
+                <div class="head">
+                    <strong>属性权重</strong>
+                </div>
+                <ul class="detail attr">
+                    {{range .PropertyList}}
+                    <li>
+                        <span class="title">{{.Desc}}</span>
+                        <span class="val">
+                        <label>
+                            <input name="PropertyWeight[{{.Key}}]" type="number" min="0" max="100">
+                        </label>
+                        </span>
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+        <div class="artis" style="display: inline-block; vertical-align: top; width: auto;">
+            <div class="item arti">
+                <div class="head" style="display: flex">
                     <label>
-                        <select name="type">
-                            <option value="1">生之花</option>
-                            <option value="2">死之羽</option>
-                            <option value="3">时之沙</option>
-                            <option value="4">空之杯</option>
-                            <option value="5">理之冠</option>
+                        <input name="Level" type="number" min="1" max="20" value="20" style="display: inline-block">
+                        <select name="Type" style="display: inline-block">
+                            <option selected disabled hidden>部位</option>
+                            {{range .Header}}
+                            <option value="{{.Type}}" style="display: inline-block">{{.Name}}</option>
+                            {{end}}
                         </select>
                     </label>
-                </strong>
-            </div>
-            <ul class="detail attr">
-                <li class="arti-main">
-                    <label>
+                </div>
+                <ul class="detail attr">
+                    <li class="arti-main">
                     <span class="title">
-                        <select name="property1">
-                            <option value="Hp" selected>小生命</option>
-                        </select>
+                        <label>
+                            <select name="MainPropKey">
+                                <option selected disabled hidden>主词条</option>
+                                {{range .MainProp}}
+                                <option value="{{.Key}}">{{.Desc}}</option>
+                                {{end}}
+                            </select>
+                        </label>
                     </span>
                         <span class="val">
-                        <input name="value1" type="number">
+                        <label>
+                            <input name="MainPropValue" type="text">
+                        </label>
                     </span>
-                    </label>
-                </li>
-                <li>
-                    <label>
+                    </li>
+                    {{range .AppendPropCount}}
+                    <li>
                     <span class="title">
-                        <select name="property2">
-                            <option value="Hp" selected>小生命</option>
-                        </select>
+                        <label>
+                            <select name="AppendPropKey">
+                                {{range $.AppendProp}}
+                                <option value="{{.Key}}">{{.Desc}}</option>
+                                {{end}}
+                            </select>
+                        </label>
                     </span>
                         <span class="val">
-                            <input type="number">
+                        <label>
+                            <input name="AppendPropValue" type="text">
+                        </label>
                     </span>
-                    </label>
-                </li>
-            </ul>
-            <div class="head">
-                <button type="submit">提交</button>
+                    </li>
+                    {{end}}
+                </ul>
+                <div class="head">
+                    <button type="submit">提交</button>
+                </div>
             </div>
-        </form>
-    </div>
+            {{if .Artifact.Name}}
+            {{template "artifactItem" .Artifact}}
+            {{end}}
+        </div>
+    </form>
 </div>
 </body>
 </html>

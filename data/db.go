@@ -15,7 +15,6 @@ type DB struct {
 const (
 	TableNameUser      = "user"
 	TableNameCharacter = "character"
-	UserProfileKey     = "profile"
 	IdSeparator        = "_"
 )
 

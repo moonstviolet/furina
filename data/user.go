@@ -62,6 +62,7 @@ func UpdateUser(uid string) (user User) {
 	}
 	enkaData, err := getEnkaData(uid)
 	if err != nil {
+		logger.Error("get enka data", "error", err)
 		user.UpdateMsg = UpdateInternalServerErrorMsg
 		setUserCache(user)
 		return
