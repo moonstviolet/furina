@@ -78,3 +78,42 @@ func getArtifactListByEquipList(l []Equip) (list []Artifact) {
 	}
 	return
 }
+
+func getArtifactMainPropListByType(t int) (list []string) {
+	switch t {
+	case ArtifactType_Sands:
+		list = []string{
+			PropKey_HpPct,
+			PropKey_AtkPct,
+			PropKey_DefPct,
+			PropKey_Mastery,
+			PropKey_Recharge,
+		}
+	case ArtifactType_Goblet:
+		list = []string{
+			PropKey_HpPct,
+			PropKey_AtkPct,
+			PropKey_DefPct,
+			PropKey_Mastery,
+			PropKey_PhysicalDmgBonus,
+			PropKey_PyroDmgBonus,
+			PropKey_ElectroDmgBonus,
+			PropKey_HydroDmgBonus,
+			PropKey_DendroDmgBonus,
+			PropKey_AnemoDmgBonus,
+			PropKey_GeoDmgBonus,
+			PropKey_CryoDmgBonus,
+		}
+	case ArtifactType_Circlet:
+		list = []string{
+			PropKey_HpPct,
+			PropKey_AtkPct,
+			PropKey_DefPct,
+			PropKey_Mastery,
+			PropKey_CritRate,
+			PropKey_CritDmg,
+			PropKey_HealingBonus,
+		}
+	}
+	return
+}

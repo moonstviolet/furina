@@ -14,7 +14,7 @@ const (
 )
 
 var (
-	ArtifactRatingStr = [ArtifactRatingCount]string{"D", "C", "B", "A", "S", "SS", "SSS", "ACE", "ACE²"}
+	artifactRatingStr = [ArtifactRatingCount]string{"D", "C", "B", "A", "S", "SS", "SSS", "ACE", "ACE²"}
 	propGrowthMap     = map[string][4]float64{
 		PropKey_Hp:       {209.13, 239, 268.88, 298.75},
 		PropKey_HpPct:    {0.048, 0.0466, 0.0525, 0.0583},
@@ -53,6 +53,15 @@ func getPropGrowthAverage(key string) float64 {
 		log.Fatalln("invalid key")
 	}
 	return (v[0] + v[1] + v[2] + v[3]) / 4
+}
+
+func getArtifactMainPropHighestWeight(t int, w map[string]int) int {
+	list := getArtifactMainPropListByType(t)
+	highestWeight := 0
+	for _, key := range list {
+		highestWeight = max(highestWeight, w[key])
+	}
+	return highestWeight
 }
 
 func (c *Character) CalArtifactScore() {
@@ -146,17 +155,38 @@ func (a *Artifact) CalScore(w MSI, p map[string]Property) {
 		cnt++
 	}
 
+	hasMultipleMainProp := func(t int) bool {
+		return t == ArtifactType_Sands || t == ArtifactType_Goblet || t == ArtifactType_Circlet
+	}
+
 	// 主词条附加分
-	if a.Type == ArtifactType_Sands || a.Type == ArtifactType_Goblet || a.Type == ArtifactType_Circlet {
+	if hasMultipleMainProp(a.Type) {
 		key := a.MainProp.Key
 		addScore := ArtifactPerNumberScore * a.MainProp.Value / getPropGrowthMax(key) * float64(weight[key]) / 100 * 0.25
 		a.Score += addScore
 		maxScore += addScore
 	}
+
 	// 评分归一化
 	if maxScore != 0 {
 		a.Score = a.Score / maxScore * ArtifactMaxScore
 	}
+
+	// 最优主词条
+	if hasMultipleMainProp(a.Type) && a.MainProp.Key != PropKey_Recharge {
+		var (
+			w1   = weight[a.MainProp.Key]                           // 实际的权重
+			w2   = getArtifactMainPropHighestWeight(a.Type, weight) // 可能的最优权重
+			diff = w2 - w1
+		)
+		if diff > 50 {
+			diff = 50
+		}
+		if diff > 0 {
+			a.Score *= 1 - float64(diff)/100
+		}
+	}
+
 	a.Rating = getArtifactRating(a.Score)
 }
 
@@ -168,5 +198,5 @@ func getArtifactRating(score float64) string {
 	if r < 0 {
 		r = 0
 	}
-	return ArtifactRatingStr[r]
+	return artifactRatingStr[r]
 }

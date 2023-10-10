@@ -85,7 +85,6 @@ func UpdateUser(uid string) (data UpdateUserResp) {
 	for i, c := range user.CharacterList {
 		has[c.Cid] = i
 	}
-	fmt.Println(len(user.CharacterList))
 	for _, c := range list {
 		c.UpdateAt = now
 		putCharacter(c)
@@ -102,7 +101,6 @@ func UpdateUser(uid string) (data UpdateUserResp) {
 		}
 		data.UpdateList = append(data.UpdateList, c.Cid)
 	}
-	fmt.Println(len(user.CharacterList))
 	putUser(user)
 	data.User = user
 	data.UpdateMsg = UpdateSucceedMsg
