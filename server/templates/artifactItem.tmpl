@@ -1,0 +1,32 @@
+[[ define "artifactItem" ]]
+<template id="artifactItem-template">
+    <div class="item arti">
+        <div class="arti-icon">
+            <div class="img"
+                 :style="{'background-image':'url(/static/resources/artifact/imgs/'+artifact.Set+'/'+artifact.Type+'.webp)'}"
+            ></div>
+            <span>+{{ artifact.Level }}</span>
+        </div>
+        <div class="head">
+            <strong>{{ artifact.Name }}</strong>
+            <span class="mark" :class="'mark-'+artifact.Rating">
+                <span>{{ artifact.Score }}分</span> - {{ artifact.Rating }}
+            </span>
+        </div>
+        <ul class="detail attr">
+            <li class="arti-main">
+                <span class="title">{{ artifact.MainProp.Desc }}</span>
+                <span class="val">+{{ artifact.MainProp.Value }}</span>
+            </li>
+            <li v-for="p in artifact.AppendPropList"
+                :class="p.Weight>80 ? 'great' : (p.Weight ? 'useful' : 'nouse')"
+            >
+                <span class="title">{{ p.Desc }}
+                    <i class="eff">{{ p.Number }}</i><i v-if="p.Count" class="up-num" :class="'up-'+p.Count"></i>
+                </span>
+                <span class="val">+{{ p.Value }}</span>
+            </li>
+        </ul>
+    </div>
+</template>
+[[ end ]]

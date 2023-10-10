@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn" v-scope>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
+    <title>Furina</title>
+</head>
+<body>
+<div class="background">
+    <h1 class="title">Genshin Impact Tools</h1>
+    <div class="logoContainer">
+        <div class="logo"></div>
+    </div>
+    <div class="blank"></div>
+    <div class="uidInput">
+        <input
+                class="uid"
+                type="text"
+                onkeyup="value=value.replace(/[^\d]/g,'').substring(0,9)"
+                autofocus
+                placeholder="Enter UID..."
+                v-model="uid"
+                maxlength="9"
+                @keyup.enter="login"
+        />
+        <div class="errMsg">{{ msg }}</div>
+    </div>
+</div>
+<script type="module" src="/static/js/index.js"></script>
+</body>
+</html>

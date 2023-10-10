@@ -1,0 +1,16 @@
+[[ define "buttonItem" ]]
+<template id="buttonItem-template">
+    <div class="item-icon char-icon star-3">
+        <!-- 疑似petite-vue bug -->
+        <a v-if="href" :href="href" class="img" target="_self"
+           style="background-image:url(/static/resources/cont/logo.png);"></a>
+        <div v-else class="img button" style="background-image:url(/static/resources/cont/logo.png);"></div>
+    </div>
+    <style>
+        .button:hover {
+            cursor: pointer;
+        }
+    </style>
+    <span class="name">{{ buttonName }}</span>
+</template>
+[[ end ]]

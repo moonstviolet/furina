@@ -1,4 +1,4 @@
-package render
+package server
 
 import (
 	"furina/config"
@@ -20,7 +20,6 @@ type CharacterView struct {
 	WeaponType    string // 武器类型
 	Level         int    // 等级
 	Constellation int    // 命座
-	ConstellCount []int
 	TalentList    []data.Talent
 	PropertyList  []PropertyView
 	Weapon        data.Weapon
@@ -39,7 +38,6 @@ func getCharacterViewData(c data.Character) CharacterView {
 		WeaponType:    c.WeaponType,
 		Level:         c.Level,
 		Constellation: c.Constellation,
-		ConstellCount: []int{1, 2, 3, 4, 5, 6},
 		TalentList:    []data.Talent{c.TalentMap[TalentKeyA], c.TalentMap[TalentKeyE], c.TalentMap[TalentKeyQ]},
 		Weapon:        c.Weapon,
 		ArtifactStat:  getArtifactStatView(c.ArtifactStat),

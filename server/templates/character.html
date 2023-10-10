@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-cn" v-scope>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="preload" href="/static/resources/font/HYWH-65W.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/NZBZ.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/tttgbnumber.woff" as="font" type="font/woff">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/characterBasic.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/character.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/property.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/artifact.css"/>
+    <title>{{char.Name}}</title>
+</head>
+<body :class="'elem-'+char.Element">
+<div class="container elem-bg" id="container">
+    <!--角色基础信息-->
+    <div class="basic">
+        <div class="main-pic"
+             :style="{'background-image':'url(/static/resources/character/'+char.Name+'/imgs/splash.webp)'}">
+        </div>
+        <div class="detail">
+            <div class="char-name">{{ char.Name }}</div>
+            <div class="char-lv">UID {{ char.Uid }} - Lv.{{ char.Level }}
+                <span class="cons" :class="'cons-'+char.Constellation">{{ char.Constellation }}命</span>
+            </div>
+            <div>
+                <!--角色战斗天赋-->
+                <div class="char-talents">
+                    <div class="talent-item" v-for="t in char.TalentList">
+                        <div class="talent-icon"
+                             :class="{'talent-plus':t.Level>t.BaseLevel, 'talent-crown':t.BaseLevel>=10 }">
+                            <div class="talent-icon-img"
+                                 :style="{'background-image':'url(/static/resources/icons/atk-'+char.WeaponType+'.webp)'}"
+                                 v-if="t.Key==='a'"></div>
+                            <div class="talent-icon-img"
+                                 :style="{'background-image':'url(/static/resources/character/'+char.Name+'/icons/cons-'+t.Constellation+'.webp)'}"
+                                 v-else></div>
+                            <span>{{ t.Level }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!--角色战斗属性-->
+                <ul class="char-prop">
+                    <li v-for="p in char.PropertyList">
+                        <div class="icon"><i :class="'i-'+p.Key"></i></div>
+                        <div class="title">{{ p.Desc }}</div>
+                        <div class="weight">
+                            <span v-if="p.Weight" :class="p.Weight>=80 ? 'gold' :'nromal'">{{ p.Weight }}</span>
+                        </div>
+                        <div class="value">
+                            {{ p.Value }}
+                        </div>
+                        <div class="value2">
+                            <span class="base">{{ p.Base }}</span>
+                            <span class="plus" v-if="p.Plus">+{{ p.Plus }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--角色命座-->
+        <div class="char-cons">
+            <div class="cons-item" v-for="c in [1,2,3,4,5,6]">
+                <div class="talent-icon" :class="{'off': c>char.Constellation}">
+                    <div class="talent-icon-img"
+                         :style="{'background-image':'url(/static/resources/character/'+char.Name+'/icons/cons-'+c+'.webp)'}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="data-info">
+            <span class="time">Game Version: {{ char.Version.GameVersion }}</span>
+            <span> | </span><span>数据源: {{ char.Version.DataSource }}</span>
+            <span> | </span><span class="time">{{ char.UpdateAt }}</span>
+        </div>
+    </div>
+    <div class="cont">
+        <div class="cont-footer dmg-desc" style="text-align: center">
+            <span v-for="s in char.ArtifactStat.StatNumber">
+                <span v-if="s.Key==='总计'">{{ s.Key }}<strong>{{ s.Number }}</strong>词条</span>
+                <span v-else>| {{ s.Key }}<strong>{{ s.Number }}</strong></span>
+            </span>
+        </div>
+    </div>
+    <!--武器+圣遗物列表-->
+    <div class="artis">
+        <div class="artis-weapon">
+            <div class="item weapon">
+                <div class="img"
+                     :style="{'background-image':'url(/static/resources/weapon/'+char.WeaponType+'/'+char.Weapon.Name+'/icon.webp)'}"></div>
+                <div class="head">
+                    <strong>{{ char.Weapon.Name }}</strong>
+                    <div class="star" :class="'star-'+char.Weapon.Quality"></div>
+                    <span>Lv.{{ char.Weapon.Level }}
+                        <span class="affix" :class="'affix-'+char.Weapon.Refinement">精{{
+                                char.Weapon.Refinement
+                            }}</span></span>
+                </div>
+            </div>
+            <div class="item arti-stat">
+                <div class="arti-class-title">{{ char.ArtifactStat.Desc }}</div>
+                <div class="arti-stat-ret">
+                    <div>
+                        <strong :class="'mark-'+char.ArtifactStat.Rating">{{ char.ArtifactStat.Rating }}</strong>
+                        <span>圣遗物评级</span>
+                    </div>
+                    <div><strong>{{ char.ArtifactStat.Score }}</strong><span>圣遗物总分</span></div>
+                </div>
+            </div>
+        </div>
+        <div
+                v-for="(artifact, idx) in char.ArtifactList"
+                v-scope="{$template: '#artifactItem-template', artifact: artifact}"
+                :key="idx"
+        ></div>
+    </div>
+    <div class="copyright">
+        Created By Furina<span class="version">{{ char.Version.Version }}</span>
+    </div>
+</div>
+[[ template "artifactItem" ]]
+<script type="module" src="/static/js/character.js"></script>
+</body>
+</html>

@@ -34,6 +34,10 @@ func NewDamage(c DamageCharacterInfo, m DamageMonsterInfo) *Damage {
 	}
 }
 
+func test()  {
+
+}
+
 func (d *Damage) Cal() (average, max float64) {
 	// 基础区
 	res := d.CharacterInfo.Base

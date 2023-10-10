@@ -1,0 +1,14 @@
+[[ define "characterItem" ]]
+<template id="characterItem-template">
+    <div class="item-icon char-icon" :class="'star'+char.Quality">
+        <a target="_blank" :href="'/character/'+char.Cid">
+            <span class="img"
+                  :style="{'background-image':'url(/static/resources/character/'+char.Name+'/imgs/face-q.webp)'}">
+            </span>
+        </a>
+    </div>
+    <span class="name">{{ char.Name }}
+        <span class="cons" :class="'cons-'+char.Constellation">{{ char.Constellation }}</span>
+    </span>
+</template>
+[[ end ]]

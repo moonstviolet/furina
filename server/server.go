@@ -14,7 +14,6 @@ import (
 
 	"furina/config"
 	"furina/logger"
-	"furina/render"
 )
 
 func NewServer() *gin.Engine {
@@ -22,7 +21,7 @@ func NewServer() *gin.Engine {
 	r := gin.New()
 	r.Use(ginLogger(), ginRecovery())
 	r.Static("/static", "static")
-	render.Routes(r)
+	routes(r)
 	return r
 }
 
@@ -34,10 +33,11 @@ func ginLogger() gin.HandlerFunc {
 		cost := time.Since(start).String()
 		if !strings.HasPrefix(p, "/static") {
 			logger.Info(
-				"web",
+				"GinLogger",
 				"path", p,
 				"method", c.Request.Method,
 				"cost", cost,
+				"ip", c.RemoteIP(),
 			)
 		}
 	}

@@ -46,14 +46,14 @@ func (m *MongoDB) Start() error {
 
 func (m *MongoDB) Write(table, id string, value any) error {
 	_, err := m.Db.Collection(table).ReplaceOne(
-		context.Background(), bson.M{"_id": id}, value, options.Replace().SetUpsert(true),
+		context.TODO(), bson.M{"_id": id}, value, options.Replace().SetUpsert(true),
 	)
 	return err
 }
 
 func (m *MongoDB) Read(table, id string, value any) (err error) {
 	return m.Db.Collection(table).FindOne(
-		context.Background(), bson.M{
+		context.TODO(), bson.M{
 			"_id": id,
 		},
 	).Decode(value)

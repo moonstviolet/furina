@@ -1,4 +1,4 @@
-package render
+package server
 
 import (
 	"golang.org/x/text/language"
@@ -74,5 +74,5 @@ func formatPercent(f float64) string {
 }
 
 func formatTime(t time.Time) string {
-	return t.Format("01-02 15:04")
+	return t.Local().Format("01-02 15:04")
 }

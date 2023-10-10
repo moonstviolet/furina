@@ -1,0 +1,51 @@
+.background {
+    width: 800px;
+    height: 400px;
+    background-image: url(/static/resources/bg/login.jpg);
+    background-size: 100%;
+}
+
+.logoContainer {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.logo {
+    display: inline-block;
+    height: 90px;
+    width: 60px;
+    background-image: url(/static/resources/bg/furina.jpg);
+    background-size: 100%;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.title {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.blank {
+    height: 100px;
+}
+
+.uidInput {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.uid {
+    background-color: inherit;
+    width: 180px;
+    box-shadow: 0 4px 9px #0006 inset, 0 0 30px #add8e6;
+    border-color: #142b51;
+    border-radius: 4px;
+    outline: none;
+    font-size: 30px;
+}
+
+.errMsg {
+    margin: 10px auto;
+    color: #E55C5D;
+    text-align: center;
+}

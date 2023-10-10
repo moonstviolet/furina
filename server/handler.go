@@ -1,50 +1,35 @@
-package render
+package server
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"path/filepath"
 	"strconv"
 
-	"furina/config"
 	"furina/data"
+	"furina/errorCode"
 	"furina/logger"
 )
 
-func Routes(r *gin.Engine) {
-	r.LoadHTMLGlob(filepath.Join(config.GetBaseDir(), "render", "templates", "*"))
-	r.GET("/", index)
-	r.POST("/login", login)
-	r.GET("/logout", logout)
-	r.GET("/user/:uid/profile", userProfile)
-	r.POST("/user/:uid/update", userUpdate)
-	r.GET("/user/:uid/character/:cid", characterDetail)
-	r.GET("/artifact", artifact)
-	r.POST("/artifact", artifact)
-}
-
 func index(ctx *gin.Context) {
-	uid, err := ctx.Cookie("uid")
-	if err != nil || uid == "" {
+	if getUserId(ctx) == "" {
 		ctx.HTML(http.StatusOK, "index.html", nil)
 		return
 	}
-	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
+	ctx.Redirect(http.StatusFound, "/user/profile")
 }
 
-func login(ctx *gin.Context) {
-	uid := ctx.Request.FormValue("uid")
+func login(
+	req *struct {Uid string},
+	resp *struct{},
+	ctx *gin.Context,
+) *errorCode.RespError {
+	uid := req.Uid
 	if !data.CheckUidValid(uid) {
-		ctx.String(http.StatusBadRequest, "错误的id")
-		return
-	}
-	if uid == "" {
-		ctx.Redirect(http.StatusFound, "/")
+		return errorCode.NewError(errorCode.CODE_PARAM_WRONG, "错误的UID")
 	}
 	ctx.SetCookie("uid", uid, 0, "", "", false, true)
-	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
+	return nil
 }
 
 func logout(ctx *gin.Context) {
@@ -52,43 +37,58 @@ func logout(ctx *gin.Context) {
 	ctx.Redirect(http.StatusFound, "/")
 }
 
+// 用户
 func userProfile(ctx *gin.Context) {
-	uid := ctx.Param("uid")
-	if !data.CheckUidValid(uid) {
-		ctx.String(http.StatusBadRequest, "错误的id")
-		return
-	}
-	user := data.GetUser(uid)
-	if user.Uid == "" {
-		user = data.UpdateUser(uid)
-	}
-	if user.Uid == "" {
-		ctx.String(http.StatusOK, "错误的id")
-		return
-	}
-	data.CleanUserUpdateMsg(uid)
-	ctx.HTML(http.StatusOK, "profile.html", getUserProfileView(user))
+	ctx.HTML(http.StatusOK, "profile.html", nil)
 }
 
-func userUpdate(ctx *gin.Context) {
-	uid := ctx.Param("uid")
-	if !data.CheckUidValid(uid) {
-		ctx.String(http.StatusBadRequest, "错误的id")
-		return
+func UserProfile(
+	req *struct{ Update bool },
+	resp *struct {
+		User       UserProfileView
+		UpdateMsg  string
+		UpdateList []int
+	},
+	ctx *gin.Context,
+) *errorCode.RespError {
+	uid, _ := ctx.Cookie("uid")
+	var user data.User
+	if req.Update {
+		t := data.UpdateUser(uid)
+		user = t.User
+		resp.UpdateMsg = t.UpdateMsg
+		resp.UpdateList = t.UpdateList
+	} else {
+		user = data.GetUser(uid)
 	}
-	data.UpdateUser(uid)
-	ctx.Redirect(http.StatusFound, fmt.Sprintf("/user/%s/profile", uid))
+	if resp.UpdateMsg != "" && resp.UpdateMsg != data.UpdateSucceedMsg {
+		return nil
+	}
+	resp.User = getUserProfileView(user)
+	return nil
 }
 
+// 角色
 func characterDetail(ctx *gin.Context) {
-	uidStr, cidStr := ctx.Param("uid"), ctx.Param("cid")
-	cid, err := strconv.Atoi(cidStr)
+	cidStr := ctx.Param("cid")
+	_, err := strconv.Atoi(cidStr)
 	if err != nil {
 		logger.Error("Character Detail", "error", err)
 	}
-	ctx.HTML(
-		http.StatusOK, "character.html", getCharacterViewData(data.GetCharacter(uidStr, cid)),
-	)
+	ctx.HTML(http.StatusOK, "character.html", nil)
+}
+
+func CharacterDetail(
+	req *struct{ Cid int },
+	resp *struct {
+		Character CharacterView
+	},
+	ctx *gin.Context,
+) *errorCode.RespError {
+	uid := getUserId(ctx)
+	char := data.GetCharacter(uid, req.Cid)
+	resp.Character = getCharacterViewData(char)
+	return nil
 }
 
 func artifact(ctx *gin.Context) {

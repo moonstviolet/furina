@@ -1,4 +1,5 @@
-.idea/
-local/
+.idea
+node_modules
+local
 *.exe
 *.js

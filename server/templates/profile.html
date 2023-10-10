@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn" v-scope>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preload" href="/static/resources/font/HYWH-65W.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/NZBZ.woff" as="font" type="font/woff">
+    <link rel="preload" href="/static/resources/font/tttgbnumber.woff" as="font" type="font/woff">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/characterBasic.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/character.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/property.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/profile.css"/>
+    <title>{{user.Uid}}</title>
+</head>
+<body>
+<div>
+    <div class="container elem-bg" id="container" style="background-image:url(/static/resources/bg/bg-sr.jpg)">
+        <div class="head-box">
+            <div class="title">角色列表
+                <div class="label">UID:{{ user.Uid }}</div>
+            </div>
+            <div class="label" v-if="updateMsg">{{ updateMsg }}</div>
+        </div>
+        <div class="cont no-rank">
+            <div class="char-list">
+                <div v-scope="{$template:'#buttonItem-template', buttonName : '更新面板' }" @click="update"></div>
+                <div v-scope="{$template:'#buttonItem-template', buttonName : '切换账号', href:'/logout'}"></div>
+            </div>
+            <div class="char-list">
+                <div
+                        class="char-item"
+                        v-for="(char, idx) in user.CharacterList"
+                        :class="{'new-char' : updateList.includes(char.Cid)}"
+                        :key="idx"
+                        v-scope="{$template:'#characterItem-template', char:char}"
+                ></div>
+            </div>
+            <div class="cont-footer">
+                <span class="new-tip" v-if="updateList.length !== 0">本次更新角色</span>
+                <span v-else>更新时间: {{ user.UpdateAt }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+[[ template "characterItem" ]]
+[[ template "buttonItem" ]]
+<script type="module" src="/static/js/profile.js"></script>
+</body>
+</html>
