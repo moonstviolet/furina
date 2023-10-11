@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"time"
 )
 
 const (
 	EnkaUrlFormat = "https://enka.network/api/uid/%s"
-	UserAgent     = "furina"
+	EnkaUserAgent = "furina"
 )
 
 const (
@@ -187,7 +188,7 @@ func getEnkaData(uid string) (data *EnkaData, err error) {
 	if err != nil {
 		return
 	}
-	req.Header.Set("User-Agent", UserAgent)
+	req.Header.Set("User-Agent", EnkaUserAgent)
 	client := &http.Client{
 		Timeout: time.Second * 10,
 	}

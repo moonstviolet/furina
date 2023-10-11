@@ -2,9 +2,10 @@ package data
 
 import (
 	"fmt"
-	"furina/logger"
 	"sync"
 	"time"
+
+	"furina/logger"
 )
 
 const (
@@ -57,8 +58,9 @@ type UpdateUserResp struct {
 
 func UpdateUser(uid string) (data UpdateUserResp) {
 	user := getUserCache(uid)
-	if t := time.Now().Sub(user.UpdateAt).Seconds(); t < float64(user.TTL) {
-		data.UpdateMsg = fmt.Sprintf("更新失败, %.fs后才可再次更新数据", float64(user.TTL)-t)
+	ttl := max(user.TTL, 300)
+	if t := time.Now().Sub(user.UpdateAt).Seconds(); t < float64(ttl) {
+		data.UpdateMsg = fmt.Sprintf("更新失败, %.fs后才可再次更新数据", float64(ttl)-t)
 		return
 	}
 	enkaData, err := getEnkaData(uid)
