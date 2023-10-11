@@ -7,29 +7,29 @@ import (
 )
 
 func getCharacterNameMapFile() string {
-	return filepath.Join(config.GetBaseDir(), "config", "characterName.json")
+	return filepath.Join(config.GetBaseDir(), "data", "characterName.json")
+}
+
+func getWeaponNameMapFile() string {
+	return filepath.Join(config.GetBaseDir(), "data", "weaponName.json")
+}
+
+func getArtifactSetNameMapFile() string {
+	return filepath.Join(config.GetBaseDir(), "data", "artifactSetName.json")
 }
 
 func getCharacterPropertyWeightMapFile() string {
 	return filepath.Join(config.GetBaseDir(), "config", "propertyWeight.json")
 }
 
-func getSetNameTextHashMapFile() string {
-	return filepath.Join(config.GetBaseDir(), "config", "setNameTextHash.json")
-}
-
 func getCharacterDataFileByName(name string) string {
 	return filepath.Join(config.GetBaseDir(), "static", "resources", "character", name, "data.json")
 }
 
-func getWeaponDataFileByType(weapon string) string {
-	return filepath.Join(config.GetBaseDir(), "static", "resources", "weapon", weapon, "data.json")
+func getWeaponDataFileByTypeAndName(weaponType, name string) string {
+	return filepath.Join(config.GetBaseDir(), "static", "resources", "weapon", weaponType, name, "data.json")
 }
 
 func getArtifactDataFile() string {
 	return filepath.Join(config.GetBaseDir(), "static", "resources", "artifact", "data.json")
-}
-
-func getUserListFile() string {
-	return filepath.Join(config.GetBaseDir(), "storage", "user.json")
 }

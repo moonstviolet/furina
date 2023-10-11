@@ -6,12 +6,6 @@ import (
 	"os"
 )
 
-type (
-	MSS map[string]string
-	MSI map[string]int
-	MIS map[int]string
-)
-
 type CharacterMeta struct {
 	Cid            int
 	Name           string
@@ -29,11 +23,10 @@ type ArtifactMeta struct {
 }
 
 var (
-	CharacterIdToNameMap = MIS{}                     // id->name
-	CharacterNameToIdMap = MSI{}                     // name->id
+	CharacterIdToNameMap = map[int]string{}          // id->name
 	CharacterMetaMap     = map[int]CharacterMeta{}   // id->characterMeta
-	WeaponIdToNameMap    = MIS{}                     // id->name
-	SetNameTextHashMap   = MSS{}                     // hash->name
+	WeaponIdToNameMap    = map[int]string{}          // id->name
+	ArtifactSetNameMap   = map[string]string{}       // hash->name
 	ArtifactMetaMap      = map[string]ArtifactMeta{} // name->artifactMeta
 )
 
@@ -43,11 +36,8 @@ func init() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	for id, name := range CharacterIdToNameMap {
-		CharacterNameToIdMap[name] = id
-	}
 	// 角色属性权重
-	weightMap := map[string]MSI{} // Name->Weight
+	weightMap := map[string]map[string]int{} // Name->Weight
 	err = readDataFromFile(getCharacterPropertyWeightMapFile(), &weightMap)
 	if err != nil {
 		log.Fatalln(err)
@@ -56,11 +46,11 @@ func init() {
 	for id, name := range CharacterIdToNameMap {
 		CharacterMetaMap[id] = func() CharacterMeta {
 			var mt struct {
-				Star       int    `json:"star"`
-				Elem       string `json:"elem"`
-				Weapon     string `json:"weapon"`
-				TalentId   MIS    `json:"talentId"`
-				TalentCons MSI    `json:"talentCons"`
+				Star       int            `json:"star"`
+				Elem       string         `json:"elem"`
+				Weapon     string         `json:"weapon"`
+				TalentId   map[int]string `json:"talentId"`
+				TalentCons map[string]int `json:"talentCons"`
 			}
 			err = readDataFromFile(getCharacterDataFileByName(name), &mt)
 			if err != nil {
@@ -72,8 +62,8 @@ func init() {
 				Quality:        mt.Star,
 				Element:        mt.Elem,
 				WeaponType:     mt.Weapon,
-				TalentId:       MIS{},
-				TalentConstell: MSI{},
+				TalentId:       map[int]string{},
+				TalentConstell: map[string]int{},
 				PropertyWeight: weightMap[name],
 			}
 			for k, v := range mt.TalentId {
@@ -85,23 +75,13 @@ func init() {
 			return cm
 		}()
 	}
-	// 武器基础信息
-	for _, t := range []string{Weapon_Bow, Weapon_Sword, Weapon_Catalyst, Weapon_Claymore, Weapon_Polearm} {
-		m := map[string]struct {
-			Id   int    `json:"id"`
-			Name string `json:"name"`
-			Star int    `json:"star"`
-		}{}
-		err = readDataFromFile(getWeaponDataFileByType(t), &m)
-		if err != nil {
-			log.Fatalln(t, err)
-		}
-		for name, v := range m {
-			WeaponIdToNameMap[v.Id] = name
-		}
+	// 武器名称
+	err = readDataFromFile(getWeaponNameMapFile(), &WeaponIdToNameMap)
+	if err != nil {
+		log.Fatalln(err)
 	}
 	// 圣遗物套装名称
-	err = readDataFromFile(getSetNameTextHashMapFile(), &SetNameTextHashMap)
+	err = readDataFromFile(getArtifactSetNameMapFile(), &ArtifactSetNameMap)
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -52,7 +52,7 @@ type Character struct {
 	Level          int                 // 等级
 	TalentMap      map[string]Talent   // 天赋
 	PropertyMap    map[string]Property // 战斗属性
-	PropertyWeight MSI                 // 属性权重
+	PropertyWeight map[string]int      // 属性权重
 	Weapon         Weapon
 	ArtifactStat   ArtifactStat // 圣遗物总评
 	ArtifactList   []Artifact   // 圣遗物列表
@@ -158,7 +158,7 @@ func getTalentMapByAvatarInfo(info *AvatarInfo, meta *CharacterMeta) map[string]
 	return m
 }
 
-func (c *Character) setPropertyWeight(w MSI) {
+func (c *Character) setPropertyWeight(w map[string]int) {
 	c.PropertyWeight = w
 	c.CalArtifactScore()
 }

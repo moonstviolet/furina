@@ -49,7 +49,7 @@ func getArtifactListByEquipList(l []Equip) (list []Artifact) {
 	for _, e := range l {
 		if e.Flat.ItemType == ITEM_RELIQUARY {
 			a := Artifact{
-				Set:     SetNameTextHashMap[e.Flat.SetNameTextMapHash],
+				Set:     ArtifactSetNameMap[e.Flat.SetNameTextMapHash],
 				Type:    ArtifactTypeMap[e.Flat.EquipType],
 				Quality: e.Flat.RankLevel,
 				Level:   e.Reliquary.Level - 1,

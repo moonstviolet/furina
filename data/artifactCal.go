@@ -79,10 +79,10 @@ func (c *Character) CalArtifactScore() {
 	c.ArtifactStat.Rating = getArtifactRating(c.ArtifactStat.Score / 5)
 }
 
-func (a *Artifact) CalScore(w MSI, p map[string]Property) {
+func (a *Artifact) CalScore(w map[string]int, p map[string]Property) {
 	a.Score = 0
 	a.StatNumber = map[string]float64{}
-	weight := MSI{}
+	weight := map[string]int{}
 	for k, v := range w {
 		if k == PropKey_Hp || k == PropKey_Atk || k == PropKey_Def {
 			if p != nil {
@@ -176,7 +176,7 @@ func (a *Artifact) CalScore(w MSI, p map[string]Property) {
 	if hasMultipleMainProp(a.Type) && a.MainProp.Key != PropKey_Recharge {
 		var (
 			w1   = weight[a.MainProp.Key]                           // 实际的权重
-			w2   = getArtifactMainPropHighestWeight(a.Type, weight) // 可能的最优权重
+			w2   = getArtifactMainPropHighestWeight(a.Type, weight) // 理论最优权重
 			diff = w2 - w1
 		)
 		if diff > 50 {
