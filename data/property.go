@@ -200,6 +200,32 @@ func isPctPropperty(p string) bool {
 	return false
 }
 
+func isPropWeightKey(p string) bool {
+	for _, v := range []string{
+		PropKey_Hp,
+		PropKey_Atk,
+		PropKey_Def,
+		PropKey_Mastery,
+		PropKey_CritRate,
+		PropKey_CritDmg,
+		PropKey_Recharge,
+		PropKey_PhysicalDmgBonus,
+		PropKey_PyroDmgBonus,
+		PropKey_ElectroDmgBonus,
+		PropKey_HydroDmgBonus,
+		PropKey_DendroDmgBonus,
+		PropKey_AnemoDmgBonus,
+		PropKey_GeoDmgBonus,
+		PropKey_CryoDmgBonus,
+		PropKey_HealingBonus,
+	} {
+		if p == v {
+			return true
+		}
+	}
+	return false
+}
+
 func isDmgBonus(p string) bool {
 	for _, v := range []string{
 		PropKey_PhysicalDmgBonus,

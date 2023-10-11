@@ -51,9 +51,15 @@ func init() {
 	if err := vp.ReadInConfig(); err != nil {
 		log.Fatalln(err)
 	}
+
 	if err := vp.UnmarshalKey("Server", &gConfig.Server); err != nil {
 		log.Fatalln(err)
 	}
+	if gConfig.Server.HttpPort == "" {
+		gConfig.Server.HttpPort = "80"
+	}
+	gConfig.Server.RunMode = "release"
+
 	if gConfig.Database.LocalStorageDir == "" {
 		gConfig.Database.LocalStorageDir = filepath.Join(gConfig.BaseDir, "local")
 	}
@@ -62,7 +68,7 @@ func init() {
 	}
 	gConfig.Version = VersionConfig{
 		Version:     "1.0",
-		GameVersion: "4.0",
+		GameVersion: "4.1",
 		DataSource:  "Enka",
 	}
 }

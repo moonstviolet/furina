@@ -1,9 +1,8 @@
 Server:
-  RunMode: release
-  HttpPort: 80 # web端口
+  HttpPort: 80     # web端口, 缺省为80
 Database:
-  LocalStorageDir: # 本地存储目录
-  Username:
-  Password:
-  Addr: 127.0.0.1:27017 # mongo
-  DBName: furina
+  LocalStorageDir: # 本地存储目录, 缺省为项目根目录下local
+  Username:        # 数据库用户名
+  Password:        # 数据库密码
+  Addr:            # mongo数据库地址, 形如"127.0.0.1:27017", 缺省使用本地文件存储
+  DBName: furina   # 数据库名

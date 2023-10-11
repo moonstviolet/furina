@@ -2,7 +2,7 @@ package storage
 
 import (
 	"encoding/json"
-	"furina/logger"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -45,12 +45,16 @@ func createIfNotExist(table, id string) string {
 	dir := filepath.Join(config.GetLocalStorageDir(), table)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err = os.MkdirAll(dir, 0744)
-		logger.Error("创建目录失败", "err", err)
+		if err != nil {
+			log.Fatalln("创建目录失败, err:", err)
+		}
 	}
 	path := filepath.Join(dir, id)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		_, err = os.Create(path)
-		logger.Error("创建文件失败", "err", err)
+		if err != nil {
+			log.Fatalln("创建文件失败, err:", err)
+		}
 	}
 	return path
 }
