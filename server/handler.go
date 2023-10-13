@@ -20,7 +20,7 @@ func index(ctx *gin.Context) {
 }
 
 func login(
-	req *struct {Uid string},
+	req *struct{ Uid string },
 	resp *struct{},
 	ctx *gin.Context,
 ) *errorCode.RespError {
@@ -43,7 +43,10 @@ func userProfile(ctx *gin.Context) {
 }
 
 func UserProfile(
-	req *struct{ Update bool },
+	req *struct {
+		Update      bool
+		Recalculate bool
+	},
 	resp *struct {
 		User       UserProfileView
 		UpdateMsg  string
@@ -52,6 +55,11 @@ func UserProfile(
 	ctx *gin.Context,
 ) *errorCode.RespError {
 	uid, _ := ctx.Cookie("uid")
+	if req.Recalculate {
+		resp.UpdateMsg = data.Recalculate(uid)
+		return nil
+	}
+
 	var user data.User
 	if req.Update {
 		t := data.UpdateUser(uid)

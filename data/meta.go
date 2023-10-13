@@ -37,18 +37,7 @@ func init() {
 		log.Fatalln(err)
 	}
 	// 角色属性权重
-	weightMap := map[string]map[string]int{} // Name->Weight
-	err = readDataFromFile(getCharacterPropertyWeightMapFile(), &weightMap)
-	for name, weight := range weightMap {
-		for k, v := range weight {
-			if isPropWeightKey(k) == false || v < 0 || v > 100 {
-				log.Fatalf("%s属性权重配置有误, %v: %v\n", name, k, v)
-			}
-		}
-	}
-	if err != nil {
-		log.Fatalln(err)
-	}
+	weightMap := loadCharacterPropertyWeightMap()
 	// 角色基础信息
 	for id, name := range CharacterIdToNameMap {
 		CharacterMetaMap[id] = func() CharacterMeta {
@@ -125,6 +114,22 @@ func getCharacterMetaById(id int) CharacterMeta {
 
 func getWeaponNameById(id int) string {
 	return WeaponIdToNameMap[id]
+}
+
+func loadCharacterPropertyWeightMap() map[string]map[string]int {
+	weightMap := map[string]map[string]int{} // Name->Weight
+	err := readDataFromFile(getCharacterPropertyWeightMapFile(), &weightMap)
+	for name, weight := range weightMap {
+		for k, v := range weight {
+			if isPropWeightKey(k) == false || v < 0 || v > 100 {
+				log.Fatalf("%s属性权重配置有误, %v: %v\n", name, k, v)
+			}
+		}
+	}
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return weightMap
 }
 
 func readDataFromFile(path string, v any) error {

@@ -1,10 +1,10 @@
 import {createApp} from 'https://cdn.bootcdn.net/ajax/libs/petite-vue/0.4.1/petite-vue.es.min.js'
 
-function fetchData(update) {
+function fetchData(update, recalculate) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/user/profile', false);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=utf8');
-    xhr.send(JSON.stringify({Update: update}));
+    xhr.send(JSON.stringify({Update: update, Recalculate: recalculate}));
     if (xhr.status !== 200) {
         return null
     }
@@ -14,11 +14,11 @@ function fetchData(update) {
 }
 
 createApp({
-    user: Object((fetchData(false).Data || {}).User),
+    user: Object((fetchData(false, false).Data || {}).User),
     updateMsg: "",
     updateList: [],
     update() {
-        const data = fetchData(true)
+        const data = fetchData(true, false)
         if (data.Code !== 0) {
             console.log(data.Code, data.Msg)
             return
@@ -28,13 +28,13 @@ createApp({
             this.user = data.Data.User
             this.updateList = data.Data.UpdateList
         }
-        console.log(data.UpdateMsg)
     },
-    logout() {
-        console.log('start')
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/logout', false);
-        xhr.send();
-        console.log('end')
-    }
+    recalculate() {
+        const data = fetchData(false, true)
+        if (data.Code !== 0) {
+            console.log(data.Code, data.Msg)
+            return
+        }
+        this.updateMsg = data.Data.UpdateMsg
+    },
 }).mount()

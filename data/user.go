@@ -12,6 +12,7 @@ const (
 	UpdateSucceedMsg             = "获取角色面板数据成功"
 	UpdateInternalServerErrorMsg = "获取角色面板数据失败, 服务不可用"
 	UpdateIdNotExistErrorMsg     = "获取角色面板数据失败, ID错误"
+	RecalculateSucceedMsg        = "重新计算角色面板数据成功"
 )
 
 type CharacterInfo struct {
@@ -107,6 +108,18 @@ func UpdateUser(uid string) (data UpdateUserResp) {
 	data.User = user
 	data.UpdateMsg = UpdateSucceedMsg
 	return
+}
+
+func Recalculate(uid string) string {
+	user := getUserCache(uid)
+	weightMap := loadCharacterPropertyWeightMap()
+	for _, c := range user.CharacterList {
+		char := GetCharacter(user.Uid, c.Cid)
+		char.PropertyWeight = weightMap[char.Name]
+		char.CalArtifactScore()
+		putCharacter(char)
+	}
+	return RecalculateSucceedMsg
 }
 
 func getUserCache(uid string) (user User) {

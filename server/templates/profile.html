@@ -25,6 +25,7 @@
         <div class="cont no-rank">
             <div class="char-list">
                 <div v-scope="{$template:'#buttonItem-template', buttonName : '更新面板' }" @click="update"></div>
+                <div v-scope="{$template:'#buttonItem-template', buttonName : '重新计算' }" @click="recalculate"></div>
                 <div v-scope="{$template:'#buttonItem-template', buttonName : '切换账号', href:'/logout'}"></div>
             </div>
             <div class="char-list">
