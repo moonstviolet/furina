@@ -24,7 +24,9 @@ type DamageMonsterInfo struct {
 type Damage struct {
 	CharacterInfo DamageCharacterInfo
 	MonsterInfo   DamageMonsterInfo
-	ZoneMap       map[string]float64
+	Base          float64 // 基础
+	Bonus         float64 // 增伤
+
 }
 
 func NewDamage(c DamageCharacterInfo, m DamageMonsterInfo) *Damage {
@@ -34,7 +36,7 @@ func NewDamage(c DamageCharacterInfo, m DamageMonsterInfo) *Damage {
 	}
 }
 
-func test()  {
+func test() {
 
 }
 

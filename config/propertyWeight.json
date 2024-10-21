@@ -84,8 +84,7 @@
         "CritDmg": 100,
         "CritRate": 100,
         "ElectroDmgBonus": 100,
-        "Mastery": 75,
-        "PhysicalDmgBonus": 100
+        "Mastery": 50
     },
     "北斗": {
         "Atk": 75,
