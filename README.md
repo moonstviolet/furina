@@ -6,6 +6,8 @@
 
 芙门!
 
+docs/index.html 为单文件圣遗物评分计算器, 用来帮助选择圣遗物重塑结果, Github Page: <https://moonstviolet.github.io/furina/>
+
 ## 安装使用
 
 ### 配置项
